@@ -20,11 +20,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
+      - name: Vercel build
+        run: npx vercel build --prod --token=$VERCEL_TOKEN --yes
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_umNzYj4aX78WbIgY1mj5wNNy
+          VERCEL_PROJECT_ID: prj_R6V7y69tauLrpr3gBpD6uYwWD0uQ
 
-      - name: Deploy to Vercel (prebuilt)
-        run: npx vercel --token=$VERCEL_TOKEN --prod --yes --prebuilt
+      - name: Deploy prebuilt to Vercel
+        run: npx vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: team_umNzYj4aX78WbIgY1mj5wNNy

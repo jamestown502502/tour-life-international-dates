@@ -46,29 +46,9 @@ export class Preloader extends Phaser.Scene {
     this.load.json('beatmap_tokyo',    'assets/beatmaps/beatmap_tokyo.json');
     this.load.json('beatmap_la',       'assets/beatmaps/beatmap_la.json');
 
-    // ── AUDIO (load with .ogg/.mp3 fallback) ──
-    const audioFiles = [
-      ['seattle_punk',    'assets/audio/music/seattle_punk'],
-      ['newyork_hiphop',  'assets/audio/music/newyork_hiphop'],
-      ['london_indie',    'assets/audio/music/london_indie'],
-      ['tokyo_edm',       'assets/audio/music/tokyo_edm'],
-      ['la_rock',         'assets/audio/music/la_rock'],
-      ['bus_ambience',    'assets/audio/music/bus_ambience'],
-      ['crowd_cheer',     'assets/audio/sfx/crowd_cheer'],
-      ['crowd_boo',       'assets/audio/sfx/crowd_boo'],
-      ['crowd_divebar',   'assets/audio/sfx/crowd_divebar'],
-      ['ui_click',        'assets/audio/sfx/ui_click'],
-      ['dialogue_blip',   'assets/audio/sfx/dialogue_blip'],
-      ['note_perfect',    'assets/audio/sfx/note_perfect'],
-      ['note_good',       'assets/audio/sfx/note_good'],
-      ['note_miss',       'assets/audio/sfx/note_miss'],
-      ['power_up',        'assets/audio/sfx/power_up'],
-      ['scene_transition','assets/audio/sfx/scene_transition'],
-      ['money_earn',      'assets/audio/sfx/money_earn'],
-    ];
-    audioFiles.forEach(([key, path]) => {
-      this.load.audio(key, [`${path}.ogg`, `${path}.mp3`]);
-    });
+    // ── AUDIO: skipped — no audio files bundled in this build ──
+    // Audio files are listed in assets/audio/AUDIO_MANIFEST.md
+    // When audio is added, restore these load calls.
   }
 
   create() {
