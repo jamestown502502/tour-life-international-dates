@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0510" />
+  <title>Tour Life: International Dates</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0510;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: monospace;
+    }
+
+    #game-container {
+      position: relative;
+      /* Canvas will be injected here by Phaser */
+    }
+
+    /* Letterbox — Phaser handles this via scale manager, but this is the fallback */
+    canvas {
+      display: block;
+      touch-action: none; /* Prevent scroll/zoom on mobile */
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #0a0510;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #e8d8a0;
+      z-index: 100;
+      transition: opacity 0.5s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #loading-title {
+      font-size: clamp(20px, 4vw, 32px);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    #loading-sub {
+      font-size: clamp(10px, 2vw, 14px);
+      color: #a08060;
+      letter-spacing: 0.08em;
+      margin-bottom: 32px;
+    }
+
+    #loading-bar-wrap {
+      width: min(300px, 60vw);
+      height: 6px;
+      background: #2a1a3a;
+      border: 1px solid #4a2a6a;
+    }
+
+    #loading-bar {
+      height: 100%;
+      width: 0%;
+      background: #c8a030;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen">
+    <div id="loading-title">Tour Life</div>
+    <div id="loading-sub">International Dates</div>
+    <div id="loading-bar-wrap">
+      <div id="loading-bar"></div>
+    </div>
+  </div>
+
+  <div id="game-container"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

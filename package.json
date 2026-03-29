@@ -1,0 +1,17 @@
+{
+  "name": "tour-life-international-dates",
+  "version": "1.0.0",
+  "description": "Tour Life: International Dates — 2D Browser Rhythm RPG",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "phaser": "^3.60.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
