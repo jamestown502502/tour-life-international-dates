@@ -24,7 +24,8 @@ jobs:
         run: npm run build
 
       - name: Deploy to Vercel
-        run: npx vercel --token=$VERCEL_TOKEN --prod --yes --name=tour-life-international-dates
+        run: npx vercel --token=$VERCEL_TOKEN --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: team_umNzYj4aX78WbIgY1mj5wNNy
+          VERCEL_PROJECT_ID: prj_R6V7y69tauLrpr3gBpD6uYwWD0uQ
