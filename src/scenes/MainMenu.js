@@ -116,8 +116,14 @@ export class MainMenu extends Phaser.Scene {
     });
 
     // Keyboard: Enter or Space starts new game
-    this.input.keyboard.once('keydown-ENTER', () => this._newGame());
-    this.input.keyboard.once('keydown-SPACE', () => this._newGame());
+    try {
+      this.input.keyboard.on('keydown-ENTER', () => this._newGame());
+      this.input.keyboard.on('keydown-SPACE', () => this._newGame());
+    } catch(e) { console.warn('[TourLife] keyboard setup failed:', e); }
+
+    // Global escape hatch for debugging
+    window.__startGame = () => this._newGame();
+    console.log('[TourLife] MainMenu ready. Call window.__startGame() to start.');
 
     // ── FOOTER ──────────────────────────────────────────────────────────
     this.add.text(W / 2, H - 8, 'Bennett AI Solutions Inc. | v1.0', {
@@ -133,21 +139,16 @@ export class MainMenu extends Phaser.Scene {
   }
 
   _newGame() {
+    console.log('[TourLife] _newGame called, transitioning:', this._transitioning);
     if (this._transitioning) return;
     this._transitioning = true;
+    console.log('[TourLife] Starting CharacterCreate...');
     try { this.sound.stopAll(); } catch(_) {}
-    try {
-      this.cameras.main.fadeOut(400, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-        this.scene.start('CharacterCreate');
-      });
-      // Fallback: if fade event doesn't fire within 600ms, start anyway
-      this.time.delayedCall(600, () => {
-        if (this._transitioning) this.scene.start('CharacterCreate');
-      });
-    } catch(e) {
+    // Direct scene start — no fade dependency
+    this.time.delayedCall(200, () => {
+      console.log('[TourLife] scene.start CharacterCreate');
       this.scene.start('CharacterCreate');
-    }
+    });
   }
 
   _continue() {
