@@ -112,7 +112,12 @@ export class MainMenu extends Phaser.Scene {
         btn.setScale(1);
       });
       btn.on('pointerdown', item.action);
+      btn.on('pointerup', item.action);
     });
+
+    // Keyboard: Enter or Space starts new game
+    this.input.keyboard.once('keydown-ENTER', () => this._newGame());
+    this.input.keyboard.once('keydown-SPACE', () => this._newGame());
 
     // ── FOOTER ──────────────────────────────────────────────────────────
     this.add.text(W / 2, H - 8, 'Bennett AI Solutions Inc. | v1.0', {
@@ -128,21 +133,40 @@ export class MainMenu extends Phaser.Scene {
   }
 
   _newGame() {
+    if (this._transitioning) return;
+    this._transitioning = true;
     try { this.sound.stopAll(); } catch(_) {}
-    this.cameras.main.fadeOut(400, 0, 0, 0);
-    this.cameras.main.once('camerafadeoutcomplete', () => {
+    try {
+      this.cameras.main.fadeOut(400, 0, 0, 0);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        this.scene.start('CharacterCreate');
+      });
+      // Fallback: if fade event doesn't fire within 600ms, start anyway
+      this.time.delayedCall(600, () => {
+        if (this._transitioning) this.scene.start('CharacterCreate');
+      });
+    } catch(e) {
       this.scene.start('CharacterCreate');
-    });
+    }
   }
 
   _continue() {
+    if (this._transitioning) return;
+    this._transitioning = true;
     const saved = SaveSystem.load();
     if (!saved) { this._newGame(); return; }
     try { this.sound.stopAll(); } catch(_) {}
-    this.cameras.main.fadeOut(400, 0, 0, 0);
-    this.cameras.main.once('camerafadeoutcomplete', () => {
+    try {
+      this.cameras.main.fadeOut(400, 0, 0, 0);
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        this.scene.start('CityHub', { gameState: SaveSystem.merge(saved) });
+      });
+      this.time.delayedCall(600, () => {
+        if (this._transitioning) this.scene.start('CityHub', { gameState: SaveSystem.merge(saved) });
+      });
+    } catch(e) {
       this.scene.start('CityHub', { gameState: SaveSystem.merge(saved) });
-    });
+    }
   }
 
   _settings() {
